@@ -8,6 +8,9 @@ public class MoveBearBreath : MonoBehaviour
 
 		//private Rigidbody2D;
 		// Use this for initialization
+
+		
+
 		void Start ()
 		{
 				Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
@@ -41,12 +44,12 @@ public class MoveBearBreath : MonoBehaviour
 				if (msgID == BellaMessages.WeakBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.velocity = (new Vector2 (0, 0));
-						rigidbody2D.velocity = (new Vector2 (0, 10));
+						rigidbody2D.velocity = (new Vector2 (0, 0));
 				}
 				if (msgID == BellaMessages.GoodBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.velocity = (new Vector2 (0, 0));
-						rigidbody2D.velocity = (new Vector2 (0, 50));
+						rigidbody2D.velocity = (new Vector2 (0, 500));
 				}
 				if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
