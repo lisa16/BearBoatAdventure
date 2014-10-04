@@ -24,6 +24,7 @@ public class WoodAnimation : MonoBehaviour
 				Manager.messenger.Unsubscribe (BellaMessages.BreakTimeStarted, OnMessage);
 				Manager.messenger.Unsubscribe (BellaMessages.BreakTimeMinReached, OnMessage);
 		}
+
 		void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
 		{
 				animator.ResetTrigger ("Return");
