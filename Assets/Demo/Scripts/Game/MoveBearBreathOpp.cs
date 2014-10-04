@@ -3,7 +3,7 @@ using System.Collections;
 using BellaProject;
 using Bindings;
 
-public class MoveBearBreath : MonoBehaviour
+public class MoveBearBreathOpp : MonoBehaviour
 {
 
 		//private Rigidbody2D;
