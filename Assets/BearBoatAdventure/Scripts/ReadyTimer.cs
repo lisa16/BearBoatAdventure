@@ -4,8 +4,8 @@ using System.Collections;
 public class ReadyTimer : MonoBehaviour {
 	public float timer = 0f;
 	public GameObject readyButton;
-	public Vector2 button_pos;
-	public bool button_created = false;
+	private Vector2 button_pos;
+	private bool button_created = false;
 
 	void buttonAppear(){
 		button_pos = new Vector2 (0f, 0f);
