@@ -7,7 +7,9 @@ public class BearTravel : MonoBehaviour {
 	private int meters;
 	public UnityEngine.UI.Text meterDisplay;
 	public UnityEngine.UI.Text bannerDisplay;
-	AudioSource cheerAudio; 
+	AudioSource goodAudio; 
+	AudioSource strongAudio; 
+	AudioSource weakAudio; 
 //	public AudioClip Natchar;
 //	float BannerX;
 
@@ -23,9 +25,12 @@ public class BearTravel : MonoBehaviour {
 		Manager.messenger.Subscribe (BellaMessages.ReadyForInput, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
-//		BannerX = GameObject.FindGameObjectWithTag ("Bannner").transform.position.x;
-		cheerAudio = GetComponents <AudioSource> ()[0];
-//		cheerAudio.clip = Natchar;
+
+		goodAudio = GetComponents <AudioSource> ()[0];
+		weakAudio = GetComponents <AudioSource> ()[1];
+		strongAudio = GetComponents <AudioSource> ()[2];
+
+		// good weak strong
 	}
 	
 	void OnDestroy ()
@@ -51,18 +56,22 @@ public class BearTravel : MonoBehaviour {
 		if (msgID == BellaMessages.WeakBreath) {
 			Debug.Log ("!!!!!!!!!!!!some weak force");
 			meters += 30;
-			if(!cheerAudio.isPlaying)
-			cheerAudio.Play();
+			if(!weakAudio.isPlaying)
+			weakAudio.Play();
 			
 		}
 		else if (msgID == BellaMessages.GoodBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!some good force");
 			meters += 100;
+			if(!goodAudio.isPlaying)
+				goodAudio.Play();
 
 		}
 		else if (msgID == BellaMessages.StrongBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!!!!!some strong force");
 			meters += 50;
+			if(!strongAudio.isPlaying)
+				strongAudio.Play();
 
 		}
 		else if (msgID == BellaMessages.BreakTimeStarted) {
