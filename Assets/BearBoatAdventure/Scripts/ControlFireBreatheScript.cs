@@ -5,9 +5,10 @@ public class ControlFireBreatheScript : MonoBehaviour {
 
 	[SerializeField]
 	private ParticleSystem particle;
-
+	private AudioSource huff;
 	// Use this for initialization
 	void Start () {
+		huff = this.GetComponents<AudioSource> ()[0];
 	
 	}
 	
@@ -22,5 +23,6 @@ public class ControlFireBreatheScript : MonoBehaviour {
 		{
 			particle.Play();
 		}
+		huff.Play ();
 	}
 }
