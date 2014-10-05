@@ -12,8 +12,8 @@ public class MoveBearBreathCat : MonoBehaviour
 		public int multi_good = -50;
 		public int catchUp = 10;
 		float bearY;
-		public AudioSource imAhead;
-		public AudioSource encouragement;
+		AudioSource[] imAhead;
+		AudioSource encouragement;
 		float burstTicker = 0;
 //		float awayFromBear;
 //		float newCatchup;
@@ -24,7 +24,7 @@ public class MoveBearBreathCat : MonoBehaviour
 		private ParticleSystem
 				_badBurst;
 		private int _numOfAccels = 0;
-
+	
 		void Start ()
 		{
 				v_offset = Random.Range (1, 10);
@@ -36,9 +36,6 @@ public class MoveBearBreathCat : MonoBehaviour
 				_badBurst.transform.position = new Vector2 (this.transform.position.x, _badBurst.transform.position.y);
 				_badBurst.transform.parent = this.gameObject.transform;
 
-				imAhead = GetComponents <AudioSource> () [0];
-				encouragement = GetComponents <AudioSource> () [1];
-
 				bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
 				Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
@@ -46,6 +43,10 @@ public class MoveBearBreathCat : MonoBehaviour
 				Manager.messenger.Subscribe (BellaMessages.ReadyForInput, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
+
+				imAhead = GetComponents<AudioSource>();
+				encouragement = GetComponents <AudioSource>()[1];
+
 		}
 
 		void OnDestroy ()
@@ -65,7 +66,7 @@ public class MoveBearBreathCat : MonoBehaviour
 				if (burstTicker > 2f) {
 						burstTicker = 0;
 						_numOfAccels++;
-						imAhead.Play ();
+						
 				}
 
 				if (_numOfAccels > 0) {
@@ -73,6 +74,7 @@ public class MoveBearBreathCat : MonoBehaviour
 						float distanceAheadOfBear = this.transform.position.y - bearY;
 
 						if (distanceAheadOfBear > catchUp) {
+//								imAhead.Play ();
 								//Ahead of bear too much, need to slow down!!!
 								if (Random.Range (0f, 1f) > 0.95f) {
 										//5%chance to do good boost, else do bad boost
@@ -170,7 +172,7 @@ public class MoveBearBreathCat : MonoBehaviour
 				} else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorStrong);
-						imAhead.Play ();
+//						imAhead.Play ();
 				}
 		}
 }
