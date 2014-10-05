@@ -38,38 +38,31 @@ public class MoveBearBreathCat : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-				awayFromBear = Mathf.Abs (this.transform.position.y - bearY);	
-				newCatchup = awayFromBear - v_offset;
-				while (awayFromBear > catchUp) {
-						//do nothing
-						gettingClose ();
+				awayFromBear = this.transform.position.y - bearY;
+			
+				if (Mathf.Abs (awayFromBear) > catchUp) {
+					if (awayFromBear < catchUp) {
+								//do nothing
+								gettingClose ();
+						} else if(awayFromBear > catchUp){
+								gettingAway ();
+						}
 				}
 				
 		}
 
+		void gettingAway ()
+		{
+				float reverseCatchup = -1 * v_offset;
+				Vector2 vectorRevCatchup = new Vector2 (0f, reverseCatchup);
+				rigidbody2D.AddForce (vectorRevCatchup);
+		}
+	
 		void gettingClose ()
 		{
-				awayFromBear = Mathf.Abs (this.transform.position.y - bearY);	
-				newCatchup = awayFromBear - v_offset;
-//				Vector2 toPosition = new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup);
-
-				//these are moving cloeser:
-				int moveCatchup = 1 * v_offset;
-				int reverseCatchup = -1 * v_offset;
-
-				Vector2 vectorCatchup = new Vector2 (0, moveCatchup);
-				Vector2 vectorRevCatchup = new Vector2 (0, reverseCatchup);
-				if (awayFromBear > catchUp) {
-//						this.transform.position = (new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup));
-//						transform.position = Vector2.SmoothDamp (transform.position, toPosition, 1000000);
-						
-						rigidbody2D.AddForce (vectorCatchup);
-				} 
-				if (awayFromBear < catchUp) {
-						rigidbody2D.AddForce (vectorRevCatchup);
-				}
-				
-
+				float moveCatchup = 1 * v_offset;
+				Vector2 vectorCatchup = new Vector2 (0f, moveCatchup);
+				rigidbody2D.AddForce (vectorCatchup);
 		}
 	
 		void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
