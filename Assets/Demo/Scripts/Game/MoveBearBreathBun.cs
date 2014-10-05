@@ -11,13 +11,13 @@ public class MoveBearBreathBun : MonoBehaviour
 		public int multi_strong = -30;
 		public int multi_good = -50;
 		public int catchUp = 50;
-
-		float bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
+		float bearY;
 		float awayFromBear;
 		float newCatchup;
 
 		void Start ()
 		{
+				bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
 				Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.StrongBreath, OnMessage);
@@ -43,9 +43,9 @@ public class MoveBearBreathBun : MonoBehaviour
 				newCatchup = awayFromBear - v_offset;
 				Vector2 toPosition = new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup);
 		
-				if (awayFromBear > catchUp*2 ) {
+				if (awayFromBear > catchUp * 2) {
 						//						this.transform.position = (new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup));
-						transform.position = Vector2.Lerp (transform.position, toPosition, 0.1f);
+						transform.position = Vector2.Lerp (transform.position, toPosition, 0.01f);
 				}
 		}
 
