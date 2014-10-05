@@ -15,6 +15,6 @@ public class readybuttonlistener : MonoBehaviour {
 
 	void OnMouseDown(){
 		// this object was clicked - do something
-		Application.LoadLevel("BearBoatGameScene");
+		Application.LoadLevel("JennyCopy");
 	}  
 }

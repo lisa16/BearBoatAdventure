@@ -11,6 +11,7 @@ public class RenderBreathIcons : MonoBehaviour {
 	[SerializeField]
 	private GameObject _badLungIcon;
 	private float _lungIconIndexX;
+	private int _numLungsDrawn = 0;
 	private List<GameObject> _breathIconList;
 
 	[SerializeField]
@@ -58,6 +59,7 @@ public class RenderBreathIcons : MonoBehaviour {
 			newBadLungIcon.transform.position = new Vector2(_lungIconIndexX, _badLungIcon.transform.position.y);
 			
 			_lungIconIndexX += 25;
+			_numLungsDrawn ++;
 			if(!_badBurst.isPlaying)
 			{
 				_badBurst.Play();
@@ -70,6 +72,7 @@ public class RenderBreathIcons : MonoBehaviour {
 			newGoodLungIcon.transform.position = new Vector2(_lungIconIndexX, _goodLungIcon.transform.position.y);
 
 			_lungIconIndexX += 25;
+			_numLungsDrawn ++;
 			if(!_burst.isPlaying)
 			{
 				_burst.Play();
@@ -83,6 +86,7 @@ public class RenderBreathIcons : MonoBehaviour {
 			newBadLungIcon2.transform.position = new Vector2(_lungIconIndexX, _badLungIcon.transform.position.y);
 			
 			_lungIconIndexX += 25;
+			_numLungsDrawn ++;
 			if(!_badBurst.isPlaying)
 			{
 				_badBurst.Play();
@@ -94,6 +98,12 @@ public class RenderBreathIcons : MonoBehaviour {
 			break;
 		case BellaMessages.BreakTimeMinReached:
 			break;
+		}
+
+		if(_numLungsDrawn>=5)
+		{
+			_numLungsDrawn = 0;
+			_lungIconIndexX = _goodLungIcon.transform.position.x;
 		}
 	}
 	
