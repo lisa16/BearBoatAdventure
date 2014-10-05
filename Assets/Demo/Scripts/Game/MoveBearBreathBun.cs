@@ -3,17 +3,18 @@ using System.Collections;
 using BellaProject;
 using Bindings;
 
-public class MoveBearBreathOpp : MonoBehaviour
+public class MoveBearBreathBun : MonoBehaviour
 {
-
-		//private Rigidbody2D;
-		// Use this for initialization
-
 		
-		public static int v_offset = Random.Range (1, 25);
-		public int multi_weak = -10;
-		public int multi_strong = -10;
+		public static int v_offset = Random.Range (1, 20);
+		public int multi_weak = -20;
+		public int multi_strong = -30;
 		public int multi_good = -50;
+		public int catchUp = 50;
+
+		float bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
+		float awayFromBear;
+		float newCatchup;
 
 		void Start ()
 		{
@@ -35,11 +36,17 @@ public class MoveBearBreathOpp : MonoBehaviour
 				Manager.messenger.Unsubscribe (BellaMessages.BreakTimeMinReached, OnMessage);
 		}
 		// Update is called once per frame
+
 		void Update ()
 		{
-				
-
-	
+				awayFromBear = Mathf.Abs (this.transform.position.y - bearY);	
+				newCatchup = awayFromBear - v_offset;
+				Vector2 toPosition = new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup);
+		
+				if (awayFromBear > catchUp*2 ) {
+						//						this.transform.position = (new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup));
+						transform.position = Vector2.Lerp (transform.position, toPosition, 0.1f);
+				}
 		}
 
 		void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
