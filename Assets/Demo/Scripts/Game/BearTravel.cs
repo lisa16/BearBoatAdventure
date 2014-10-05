@@ -7,6 +7,8 @@ public class BearTravel : MonoBehaviour {
 	private int meters;
 	public UnityEngine.UI.Text meterDisplay;
 	public UnityEngine.UI.Text bannerDisplay;
+	AudioSource cheerAudio; 
+//	public AudioClip Natchar;
 //	float BannerX;
 
 
@@ -22,6 +24,8 @@ public class BearTravel : MonoBehaviour {
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
 //		BannerX = GameObject.FindGameObjectWithTag ("Bannner").transform.position.x;
+		cheerAudio = GetComponents <AudioSource> ()[0];
+//		cheerAudio.clip = Natchar;
 	}
 	
 	void OnDestroy ()
@@ -36,7 +40,8 @@ public class BearTravel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		updateBanner ();
-		
+//		cheerAudio.clip = Natchar;
+//		cheerAudio.Play ();
 	}
 
 	void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
@@ -46,7 +51,8 @@ public class BearTravel : MonoBehaviour {
 		if (msgID == BellaMessages.WeakBreath) {
 			Debug.Log ("!!!!!!!!!!!!some weak force");
 			meters += 30;
-
+			if(!cheerAudio.isPlaying)
+			cheerAudio.Play();
 			
 		}
 		else if (msgID == BellaMessages.GoodBreath) {
