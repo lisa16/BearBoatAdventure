@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class nextbuttonlistener : MonoBehaviour {
-
+	[SerializeField]
+	private GameObject _sceneFadeOut;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,6 +16,6 @@ public class nextbuttonlistener : MonoBehaviour {
 
 	void OnMouseDown(){
 		// this object was clicked - do something
-		Application.LoadLevel("Instructions2");
+		Instantiate (_sceneFadeOut);
 	}
 }

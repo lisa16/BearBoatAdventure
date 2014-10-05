@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayButtonListener : MonoBehaviour {
 
+	[SerializeField]
+	private GameObject _sceneFadeOut;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,6 +17,6 @@ public class PlayButtonListener : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		Application.LoadLevel("JennyCopy");
+		Instantiate (_sceneFadeOut);
 		}
 }

@@ -136,7 +136,7 @@ public class SceneFadeInOut : MonoBehaviour
 			
 			// ... reload the level.
 			
-			Application.LoadLevel("JennyCopy");
+			Application.LoadLevel(_nextSceneName);
 		
 	}
 	
