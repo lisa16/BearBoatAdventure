@@ -81,11 +81,11 @@ public class MoveBearBreathCat : MonoBehaviour
 						rigidbody2D.AddForce (vectorWeak);
 			
 				}
-				if (msgID == BellaMessages.GoodBreath) {
+				else if (msgID == BellaMessages.GoodBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorGood);
 				}
-				if (msgID == BellaMessages.StrongBreath) {
+				else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorWeak);
 				}
