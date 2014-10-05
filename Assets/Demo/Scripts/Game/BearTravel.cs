@@ -53,7 +53,12 @@ public class BearTravel : MonoBehaviour {
 			meters += 50;
 
 		}
+		else if (msgID == BellaMessages.BreakTimeStarted) {
+			Debug.Log ("BreakTimeStarted!!!!!!!!");
 
+			Application.LoadLevel("Transition");
+
+		}
 		updateText ();
 
 	}

@@ -113,7 +113,7 @@ namespace BellaProject
 		/// <param name="value">Value.</param>
 		void BreathCountChanged (int value)
 		{
-			if (value > BreathsMax) {
+			if (value >= BreathsMax) {
 				Manager.messenger.Publish (this, BellaMessages.SetEnd);				
 				++ SetCount.value;
 			}
