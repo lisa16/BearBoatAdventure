@@ -12,7 +12,7 @@ public class MoveBearBreathCat : MonoBehaviour
 		public int multi_good = -50;
 		public int catchUp = 10;
 		float bearY;
-		AudioSource[] imAhead;
+		AudioSource imAhead;
 		AudioSource encouragement;
 		float burstTicker = 0;
 //		float awayFromBear;
@@ -27,6 +27,9 @@ public class MoveBearBreathCat : MonoBehaviour
 	
 		void Start ()
 		{
+		imAhead = GetComponents<AudioSource>()[0];
+		encouragement = this.gameObject.GetComponents<AudioSource>()[1];
+
 				v_offset = Random.Range (1, 10);
 
 				_burst = Instantiate (_burst) as ParticleSystem;
@@ -44,8 +47,7 @@ public class MoveBearBreathCat : MonoBehaviour
 				Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
 
-				imAhead = GetComponents<AudioSource>();
-				encouragement = GetComponents <AudioSource>()[1];
+
 
 		}
 
@@ -74,7 +76,7 @@ public class MoveBearBreathCat : MonoBehaviour
 						float distanceAheadOfBear = this.transform.position.y - bearY;
 
 						if (distanceAheadOfBear > catchUp) {
-//								imAhead.Play ();
+								imAhead.Play ();
 								//Ahead of bear too much, need to slow down!!!
 								if (Random.Range (0f, 1f) > 0.95f) {
 										//5%chance to do good boost, else do bad boost
@@ -172,7 +174,7 @@ public class MoveBearBreathCat : MonoBehaviour
 				} else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorStrong);
-//						imAhead.Play ();
+						imAhead.Play ();
 				}
 		}
 }
