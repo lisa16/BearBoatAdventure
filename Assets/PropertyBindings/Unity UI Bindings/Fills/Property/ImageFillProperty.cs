@@ -20,7 +20,9 @@ public class ImageFillProperty : Property<float>
 		protected override void Set (float value)
 		{
 				base.Set (value);
-				_image.fillAmount = value / _maxValue;
+				if (_image != null) {
+						_image.fillAmount = value / _maxValue;
+				}
 		}
 
 }
