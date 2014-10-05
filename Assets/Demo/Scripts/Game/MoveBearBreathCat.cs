@@ -12,27 +12,32 @@ public class MoveBearBreathCat : MonoBehaviour
 		public int multi_good = -50;
 		public int catchUp = 10;
 		float bearY;
-
-	float burstTicker = 0;
+		public AudioSource imAhead;
+		public AudioSource encouragement;
+		float burstTicker = 0;
 //		float awayFromBear;
 //		float newCatchup;
-	[SerializeField]
-	private ParticleSystem _burst;
-	[SerializeField]
-	private ParticleSystem _badBurst;
-
-	private int _numOfAccels = 0;
+		[SerializeField]
+		private ParticleSystem
+				_burst;
+		[SerializeField]
+		private ParticleSystem
+				_badBurst;
+		private int _numOfAccels = 0;
 
 		void Start ()
 		{
-		v_offset = Random.Range (1, 10);
+				v_offset = Random.Range (1, 10);
 
-		_burst = Instantiate (_burst) as ParticleSystem;
-		_burst.transform.position = new Vector2 (this.transform.position.x, _burst.transform.position.y);
-		_burst.transform.parent = this.gameObject.transform;
-		_badBurst = Instantiate (_badBurst) as ParticleSystem;
-		_badBurst.transform.position = new Vector2 (this.transform.position.x, _badBurst.transform.position.y);
-		_badBurst.transform.parent = this.gameObject.transform;
+				_burst = Instantiate (_burst) as ParticleSystem;
+				_burst.transform.position = new Vector2 (this.transform.position.x, _burst.transform.position.y);
+				_burst.transform.parent = this.gameObject.transform;
+				_badBurst = Instantiate (_badBurst) as ParticleSystem;
+				_badBurst.transform.position = new Vector2 (this.transform.position.x, _badBurst.transform.position.y);
+				_badBurst.transform.parent = this.gameObject.transform;
+
+				imAhead = GetComponents <AudioSource> () [0];
+				encouragement = GetComponents <AudioSource> () [1];
 
 				bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
 				Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
@@ -55,79 +60,67 @@ public class MoveBearBreathCat : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-		burstTicker += Time.deltaTime;
-		if(burstTicker > 2f)
-		{
-			burstTicker = 0;
-			_numOfAccels++;
-		}
 
-		if(_numOfAccels>0)
-		{
-			_numOfAccels--;
-			float distanceAheadOfBear = this.transform.position.y - bearY;
+				burstTicker += Time.deltaTime;
+				if (burstTicker > 2f) {
+						burstTicker = 0;
+						_numOfAccels++;
+						imAhead.Play ();
+				}
 
-			if(distanceAheadOfBear>catchUp)
-			{
-				//Ahead of bear too much, need to slow down!!!
-				if(Random.Range(0f,1f)>0.95f)
-				{
-					//5%chance to do good boost, else do bad boost
-					rigidbody2D.AddForce (new Vector2(0,multi_good*-1));
-					if(!_burst.isPlaying)
-					{
-						_burst.Play();
-					}
+				if (_numOfAccels > 0) {
+						_numOfAccels--;
+						float distanceAheadOfBear = this.transform.position.y - bearY;
+
+						if (distanceAheadOfBear > catchUp) {
+								//Ahead of bear too much, need to slow down!!!
+								if (Random.Range (0f, 1f) > 0.95f) {
+										//5%chance to do good boost, else do bad boost
+										rigidbody2D.AddForce (new Vector2 (0, multi_good * -1));
+										if (!_burst.isPlaying) {
+												_burst.Play ();
+										}
+								} else {
+										rigidbody2D.AddForce (new Vector2 (0, multi_weak * -1));
+										if (!_badBurst.isPlaying) {
+												_badBurst.Play ();
+										}
+								}
+
+								
+						} else if (distanceAheadOfBear < -catchUp) {
+								//behind bear too much, need to speed up!!!
+								if (Random.Range (0f, 1f) > 0.05f) {
+										//95%chance to do good boost, else do bad boost
+										rigidbody2D.AddForce (new Vector2 (0, multi_good * -1));
+										if (!_burst.isPlaying) {
+												_burst.Play ();
+										}
+
+								} else {
+										rigidbody2D.AddForce (new Vector2 (0, multi_weak * -1));
+										if (!_badBurst.isPlaying) {
+												_badBurst.Play ();
+										}
+								}
+
+								
+						} else {
+								//within the right range from the bear, average speed!!
+								if (Random.Range (0f, 1f) > 0.5f) {
+										//5%chance to do good boost, else do bad boost
+										rigidbody2D.AddForce (new Vector2 (0, multi_good * -1));
+										if (!_burst.isPlaying) {
+												_burst.Play ();
+										}
+								} else {
+										rigidbody2D.AddForce (new Vector2 (0, multi_weak * -1));
+										if (!_badBurst.isPlaying) {
+												_badBurst.Play ();
+										}
+								}
+						}
 				}
-				else{
-					rigidbody2D.AddForce (new Vector2(0,multi_weak*-1));
-					if(!_badBurst.isPlaying)
-					{
-						_badBurst.Play();
-					}
-				}
-			}
-			else if(distanceAheadOfBear < -catchUp)
-			{
-				//behind bear too much, need to speed up!!!
-				if(Random.Range(0f,1f)>0.05f)
-				{
-					//95%chance to do good boost, else do bad boost
-					rigidbody2D.AddForce (new Vector2(0,multi_good*-1));
-					if(!_burst.isPlaying)
-					{
-						_burst.Play();
-					}
-				}
-				else{
-					rigidbody2D.AddForce (new Vector2(0,multi_weak*-1));
-					if(!_badBurst.isPlaying)
-					{
-						_badBurst.Play();
-					}
-				}
-			}
-			else
-			{
-				//within the right range from the bear, average speed!!
-				if(Random.Range(0f,1f)>0.5f)
-				{
-					//5%chance to do good boost, else do bad boost
-					rigidbody2D.AddForce (new Vector2(0,multi_good*-1));
-					if(!_burst.isPlaying)
-					{
-						_burst.Play();
-					}
-				}
-				else{
-					rigidbody2D.AddForce (new Vector2(0,multi_weak*-1));
-					if(!_badBurst.isPlaying)
-					{
-						_badBurst.Play();
-					}
-				}
-			}
-		}
 
 //				awayFromBear = this.transform.position.y - bearY;
 			
@@ -170,14 +163,14 @@ public class MoveBearBreathCat : MonoBehaviour
 				if (msgID == BellaMessages.WeakBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorWeak);
-				}
-				else if (msgID == BellaMessages.GoodBreath) {
+						encouragement.Play ();
+				} else if (msgID == BellaMessages.GoodBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorGood);
-				}
-				else if (msgID == BellaMessages.StrongBreath) {
+				} else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorStrong);
+						imAhead.Play ();
 				}
 		}
 }
