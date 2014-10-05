@@ -87,7 +87,7 @@ public class MoveBearBreathCat : MonoBehaviour
 				}
 				else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
-						rigidbody2D.AddForce (vectorWeak);
+						rigidbody2D.AddForce (vectorStrong);
 				}
 		}
 }
