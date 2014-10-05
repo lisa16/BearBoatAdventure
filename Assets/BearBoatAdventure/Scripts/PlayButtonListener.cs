@@ -14,6 +14,6 @@ public class PlayButtonListener : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		Application.LoadLevel("BearBoatGameScene");
+		Application.LoadLevel("JennyCopy");
 		}
 }

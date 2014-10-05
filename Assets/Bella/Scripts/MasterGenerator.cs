@@ -113,7 +113,7 @@ namespace BellaProject
 		/// <param name="value">Value.</param>
 		void BreathCountChanged (int value)
 		{
-			if (value > BreathsMax) {
+			if (value >= BreathsMax) {
 				Manager.messenger.Publish (this, BellaMessages.SetEnd);				
 				++ SetCount.value;
 			}
@@ -1070,6 +1070,8 @@ namespace BellaProject
 						return Random.Range (ExhalePressureMin, ExhalePressureMax);
 				} else if (Input.GetKey (KeyCode.Alpha1)) {
 						return Random.Range (1f, ExhalePressureMin - 0.5f);
+				} else if (Input.GetKey(KeyCode.Mouse0)) {
+					return Random.Range (ExhalePressureMin, ExhalePressureMax);
 				}
 			} else if (master.inputType == MasterGenerator.InputTypes.MouseScroll) {
 				float inputValue = Input.GetAxis ("Mouse ScrollWheel");

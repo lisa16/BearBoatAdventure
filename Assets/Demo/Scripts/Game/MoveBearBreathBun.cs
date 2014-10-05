@@ -6,7 +6,7 @@ using Bindings;
 public class MoveBearBreathBun : MonoBehaviour
 {
 	
-	public static int v_offset = Random.Range (1, 30);
+	public static int v_offset;
 	public int multi_weak = -10;
 	public int multi_strong = -10;
 	public int multi_good = -50;
@@ -17,6 +17,8 @@ public class MoveBearBreathBun : MonoBehaviour
 	
 	void Start ()
 	{
+		v_offset = Random.Range (1, 30);
+
 		bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
 		Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
