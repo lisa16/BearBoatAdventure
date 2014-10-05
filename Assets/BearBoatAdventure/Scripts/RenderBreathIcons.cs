@@ -13,9 +13,16 @@ public class RenderBreathIcons : MonoBehaviour {
 	private float _lungIconIndexX;
 	private List<GameObject> _breathIconList;
 
+	[SerializeField]
+	private ParticleSystem _burst;
+	[SerializeField]
+	private ParticleSystem _badBurst;
+
 	// Use this for initialization
 	void Start ()
 	{
+		_burst = Instantiate (_burst) as ParticleSystem;
+		_badBurst = Instantiate (_badBurst) as ParticleSystem;
 		_lungIconIndexX = _goodLungIcon.transform.position.x;
 		_breathIconList = new List<GameObject> ();
 
@@ -51,6 +58,10 @@ public class RenderBreathIcons : MonoBehaviour {
 			newBadLungIcon.transform.position = new Vector2(_lungIconIndexX, _badLungIcon.transform.position.y);
 			
 			_lungIconIndexX += 25;
+			if(!_badBurst.isPlaying)
+			{
+				_badBurst.Play();
+			}
 			break;
 		case BellaMessages.GoodBreath:
 			GameObject newGoodLungIcon = Instantiate(_goodLungIcon) as GameObject;
@@ -59,9 +70,23 @@ public class RenderBreathIcons : MonoBehaviour {
 			newGoodLungIcon.transform.position = new Vector2(_lungIconIndexX, _goodLungIcon.transform.position.y);
 
 			_lungIconIndexX += 25;
+			if(!_burst.isPlaying)
+			{
+				_burst.Play();
+			}
 
 			break;
 		case BellaMessages.StrongBreath:
+			GameObject newBadLungIcon2 = Instantiate(_badLungIcon) as GameObject;
+			_breathIconList.Add (newBadLungIcon2);
+			
+			newBadLungIcon2.transform.position = new Vector2(_lungIconIndexX, _badLungIcon.transform.position.y);
+			
+			_lungIconIndexX += 25;
+			if(!_badBurst.isPlaying)
+			{
+				_badBurst.Play();
+			}
 			break;
 		case BellaMessages.ReadyForInput:
 			break;
