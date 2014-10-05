@@ -11,13 +11,13 @@ public class MoveBearBreathCat : MonoBehaviour
 		public int multi_strong = -10;
 		public int multi_good = -50;
 		public int catchUp = 10;
-
-		float bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
+		float bearY;
 		float awayFromBear;
 		float newCatchup;
 
-		void Start()
+		void Start ()
 		{
+				bearY = GameObject.FindGameObjectWithTag ("BEAR").transform.position.y;
 				Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
 				Manager.messenger.Subscribe (BellaMessages.StrongBreath, OnMessage);
@@ -38,16 +38,33 @@ public class MoveBearBreathCat : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-				awayFromBear = Mathf.Abs (this.transform.position.y - bearY);	
-				newCatchup = awayFromBear - v_offset;
-				Vector2 toPosition = new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup);
-
-				if (awayFromBear > catchUp) {
-//						this.transform.position = (new Vector2 (this.transform.position.x, this.transform.position.y + newCatchup));
-						transform.position = Vector2.Lerp (transform.position, toPosition, 1000000);
+				awayFromBear = this.transform.position.y - bearY;
+			
+				if (Mathf.Abs (awayFromBear) > catchUp) {
+					if (awayFromBear < catchUp) {
+								//do nothing
+								gettingClose ();
+						} else if(awayFromBear > catchUp){
+								gettingAway ();
+						}
 				}
+				
 		}
 
+		void gettingAway ()
+		{
+				float reverseCatchup = -1 * v_offset;
+				Vector2 vectorRevCatchup = new Vector2 (0f, reverseCatchup);
+				rigidbody2D.AddForce (vectorRevCatchup);
+		}
+	
+		void gettingClose ()
+		{
+				float moveCatchup = 1 * v_offset;
+				Vector2 vectorCatchup = new Vector2 (0f, moveCatchup);
+				rigidbody2D.AddForce (vectorCatchup);
+		}
+	
 		void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
 		{
 				int moveGood = multi_good * v_offset;
