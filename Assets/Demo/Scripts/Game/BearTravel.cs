@@ -5,10 +5,12 @@ using Bindings;
 
 public class BearTravel : MonoBehaviour {
 	private int meters;
-	public GUIText meterDisplay;
+	public UnityEngine.UI.Text meterDisplay;
 
 	void Start ()
 	{
+		meters = 0;
+		meterDisplay.text = "Ready";
 		Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.StrongBreath, OnMessage);
@@ -37,16 +39,26 @@ public class BearTravel : MonoBehaviour {
 		Debug.Log ("started the BearTravel");
 		if (msgID == BellaMessages.WeakBreath) {
 			Debug.Log ("!!!!!!!!!!!!some weak force");
+			meters += 30;
 
 			
 		}
 		else if (msgID == BellaMessages.GoodBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!some good force");
+			meters += 100;
 
 		}
 		else if (msgID == BellaMessages.StrongBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!!!!!some strong force");
+			meters += 50;
 
 		}
+
+		updateText ();
+
+	}
+
+	void updateText(){
+		meterDisplay.text = "Meters Traveled: " + meters; 
 	}
 }
