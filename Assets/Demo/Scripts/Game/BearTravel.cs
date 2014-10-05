@@ -10,6 +10,7 @@ public class BearTravel : MonoBehaviour {
 	AudioSource goodAudio; 
 	AudioSource strongAudio; 
 	AudioSource weakAudio; 
+	AudioSource backgroundAudio;
 //	public AudioClip Natchar;
 //	float BannerX;
 
@@ -29,6 +30,7 @@ public class BearTravel : MonoBehaviour {
 		goodAudio = GetComponents <AudioSource> ()[0];
 		weakAudio = GetComponents <AudioSource> ()[1];
 		strongAudio = GetComponents <AudioSource> ()[2];
+		backgroundAudio = GetComponents <AudioSource> ()[3];
 
 		// good weak strong
 	}
@@ -47,6 +49,7 @@ public class BearTravel : MonoBehaviour {
 		updateBanner ();
 //		cheerAudio.clip = Natchar;
 //		cheerAudio.Play ();
+
 	}
 
 	void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
@@ -80,6 +83,9 @@ public class BearTravel : MonoBehaviour {
 			Application.LoadLevel("Transition");
 
 		}
+
+		while(!backgroundAudio.isPlaying)
+			backgroundAudio.Play ();
 		updateText ();
 
 	}
