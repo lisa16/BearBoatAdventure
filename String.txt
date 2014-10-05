@@ -6,10 +6,13 @@ Play = "Play!"
 Ready = "Ready..."
 CoughTimeLeft = "Time Left"
 Set = ["Route 1", "Route 2", "Route 3", "Route 4", "Route 5", "Route 6"]
+
+
 GoodByeWord = "Nice Boat Journey
                See you next time~"
 
-BearTalk1 = "Good Breath!Keep on going"
+BearTalk1 = "Good Breath!"
+BearTalk1A= "Keep it up!"
 BearTalk2 = "Oh, that was too hard!"
 BearTalk3 = "May be a little harder"
 
@@ -17,7 +20,7 @@ CatTalk1 = "I am going ahead of you"
 CatTalk2 = "Ouch..."
 
 RabbitTalk1 = "Come on, bear buddy"
-RabbitTalk2 = "What a shake"
+//RabbitTalk2 = "What a shake"
 
 DragonShout = "Huff and Cough Time (^o^).
                Let's do it together"

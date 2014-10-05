@@ -6,17 +6,31 @@ using Bindings;
 public class BearTravel : MonoBehaviour {
 	private int meters;
 	public UnityEngine.UI.Text meterDisplay;
+	public UnityEngine.UI.Text bannerDisplay;
+	AudioSource goodAudio; 
+	AudioSource strongAudio; 
+	AudioSource weakAudio; 
+//	public AudioClip Natchar;
+//	float BannerX;
+
 
 	void Start ()
 	{
 		meters = 0;
 		meterDisplay.text = "Ready";
+		bannerDisplay.text = "";
 		Manager.messenger.Subscribe (BellaMessages.GoodBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.WeakBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.StrongBreath, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.ReadyForInput, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
+
+		goodAudio = GetComponents <AudioSource> ()[0];
+		weakAudio = GetComponents <AudioSource> ()[1];
+		strongAudio = GetComponents <AudioSource> ()[2];
+
+		// good weak strong
 	}
 	
 	void OnDestroy ()
@@ -30,7 +44,9 @@ public class BearTravel : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-	
+		updateBanner ();
+//		cheerAudio.clip = Natchar;
+//		cheerAudio.Play ();
 	}
 
 	void OnMessage (Object sender, string msgID, float num1 = 0f, float num2 = 0f, float num3 = 0f, float num4 = 0f)
@@ -40,17 +56,22 @@ public class BearTravel : MonoBehaviour {
 		if (msgID == BellaMessages.WeakBreath) {
 			Debug.Log ("!!!!!!!!!!!!some weak force");
 			meters += 30;
-
+			if(!weakAudio.isPlaying)
+			weakAudio.Play();
 			
 		}
 		else if (msgID == BellaMessages.GoodBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!some good force");
 			meters += 100;
+			if(!goodAudio.isPlaying)
+				goodAudio.Play();
 
 		}
 		else if (msgID == BellaMessages.StrongBreath) {
 			Debug.Log ("!!!!!!!!!!!!!!!!!!!some strong force");
 			meters += 50;
+			if(!strongAudio.isPlaying)
+				strongAudio.Play();
 
 		}
 		else if (msgID == BellaMessages.BreakTimeStarted) {
@@ -66,4 +87,22 @@ public class BearTravel : MonoBehaviour {
 	void updateText(){
 		meterDisplay.text = "Meters Traveled: " + meters; 
 	}
+
+	void updateBanner(){
+
+		Vector2 bannerVector = new Vector2 (0, 0);
+		Vector2 outsideBannerVector = new Vector2 (0, 200);
+		if (meters % 200 <= 30 && meters!=0) {
+			bannerDisplay.text = meters + " meters!";
+//			Debug.Log ();
+
+			GameObject.FindGameObjectWithTag("Banner").transform.position = bannerVector;
+		} else {
+			bannerDisplay.text = "";
+			GameObject.FindGameObjectWithTag("Banner").transform.position = outsideBannerVector;
+
+
+		}
+
+		}
 }
