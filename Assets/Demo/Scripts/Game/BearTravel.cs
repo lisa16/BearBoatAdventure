@@ -84,7 +84,7 @@ public class BearTravel : MonoBehaviour {
 		}
 		else if (msgID == BellaMessages.BreakTimeStarted) {
 			Debug.Log ("BreakTimeStarted!!!!!!!!");
-			if(NumSetsDoneScript.numOfLoads>3)
+			if(NumSetsDoneScript.numOfLoads>=2)
 			{
 				Application.LoadLevel("GameEnd");
 			}
@@ -97,10 +97,6 @@ public class BearTravel : MonoBehaviour {
 			Debug.Log ("SetEnd!!!!!!!!");
 			NumSetsDoneScript.numOfLoads ++;
 			Debug.Log(NumSetsDoneScript.numOfLoads);
-			if(NumSetsDoneScript.numOfLoads>3)
-			{
-				Application.LoadLevel("GameEnd");
-			}
 		}
 
 		updateText ();
