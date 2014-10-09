@@ -26,11 +26,13 @@ public class BearTravel : MonoBehaviour {
 		Manager.messenger.Subscribe (BellaMessages.ReadyForInput, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeStarted, OnMessage);
 		Manager.messenger.Subscribe (BellaMessages.BreakTimeMinReached, OnMessage);
+		Manager.messenger.Subscribe (BellaMessages.SessionEnd, OnMessage);
+		Manager.messenger.Subscribe (BellaMessages.SessionFinished, OnMessage);
+		Manager.messenger.Subscribe (BellaMessages.SetEnd, OnMessage);
 
 		goodAudio = GetComponents <AudioSource> ()[0];
 		weakAudio = GetComponents <AudioSource> ()[1];
 		strongAudio = GetComponents <AudioSource> ()[2];
-		backgroundAudio = GetComponents <AudioSource> ()[3];
 
 		// good weak strong
 	}
@@ -43,6 +45,9 @@ public class BearTravel : MonoBehaviour {
 		Manager.messenger.Unsubscribe (BellaMessages.ReadyForInput, OnMessage);
 		Manager.messenger.Unsubscribe (BellaMessages.BreakTimeStarted, OnMessage);
 		Manager.messenger.Unsubscribe (BellaMessages.BreakTimeMinReached, OnMessage);
+		Manager.messenger.Unsubscribe (BellaMessages.SessionEnd, OnMessage);
+		Manager.messenger.Unsubscribe (BellaMessages.SessionFinished, OnMessage);
+		Manager.messenger.Unsubscribe (BellaMessages.SetEnd, OnMessage);
 	}
 	// Update is called once per frame
 	void Update () {
@@ -79,13 +84,25 @@ public class BearTravel : MonoBehaviour {
 		}
 		else if (msgID == BellaMessages.BreakTimeStarted) {
 			Debug.Log ("BreakTimeStarted!!!!!!!!");
-
-			Application.LoadLevel("Transition");
-
+			if(NumSetsDoneScript.numOfLoads>3)
+			{
+				Application.LoadLevel("GameEnd");
+			}
+			else
+			{
+				Application.LoadLevel("Transition");
+			}
+		}
+		else if (msgID == BellaMessages.SetEnd) {
+			Debug.Log ("SetEnd!!!!!!!!");
+			NumSetsDoneScript.numOfLoads ++;
+			Debug.Log(NumSetsDoneScript.numOfLoads);
+			if(NumSetsDoneScript.numOfLoads>3)
+			{
+				Application.LoadLevel("GameEnd");
+			}
 		}
 
-		while(!backgroundAudio.isPlaying)
-			backgroundAudio.Play ();
 		updateText ();
 
 	}

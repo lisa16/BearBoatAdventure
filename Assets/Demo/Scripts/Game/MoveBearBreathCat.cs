@@ -93,6 +93,7 @@ public class MoveBearBreathCat : MonoBehaviour
 
 								
 						} else if (distanceAheadOfBear < -catchUp) {
+								encouragement.Play();
 								//behind bear too much, need to speed up!!!
 								if (Random.Range (0f, 1f) > 0.05f) {
 										//95%chance to do good boost, else do bad boost
@@ -167,14 +168,12 @@ public class MoveBearBreathCat : MonoBehaviour
 				if (msgID == BellaMessages.WeakBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorWeak);
-						encouragement.Play ();
 				} else if (msgID == BellaMessages.GoodBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorGood);
 				} else if (msgID == BellaMessages.StrongBreath) {
 						Debug.Log ("some weak force");
 						rigidbody2D.AddForce (vectorStrong);
-						imAhead.Play ();
 				}
 		}
 }

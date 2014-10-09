@@ -31,7 +31,7 @@ public class TierColorAttachment : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-				if (graphic != null)
+//				if (graphic != null)
 				graphic = GetComponent<Graphic> ();
 				propertyForCurrentValue = new Property<float> (0);
 				propertyForCurrentValue.AddToBinding (bindingForCurrentValue, BindingDirection.BindingToProperty, AssignmentOnAdd.TakeBindingValue);
@@ -49,7 +49,7 @@ public class TierColorAttachment : MonoBehaviour
 		{
 
 				if (graphic != null) {
-				
+
 						if (value > propertyForMaxValue.value) {
 								graphic.color = Color.Lerp (graphic.color, tooHigh, 0.2f);
 						} else if (value >= propertyForMinValue.value) {
@@ -58,7 +58,6 @@ public class TierColorAttachment : MonoBehaviour
 								graphic.color = Color.Lerp (graphic.color, tooLow, 0.2f);
 						}
 				} else {
-			Debug.Log ("graphic is null for the color tier");
 				}
 
 		}
