@@ -1113,6 +1113,8 @@ namespace BellaProject
 					} 
 					if (Input.touchCount > 0) {
 							return Random.Range (1f, ExhalePressureMin - 0.5f);
+					}else if (Input.GetKey(KeyCode.Mouse0)) {
+						return Random.Range (ExhalePressureMin, ExhalePressureMax);
 					}
 			
 			} else {
